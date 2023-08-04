@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   
-  
-    <meta name="description" content="Prompt Heroes中文官网是提供AI绘画Prompt提示词、关键描述词、参数指令大全中文素材网站，包括 Midjourney（MJ）、 Stable Diffusion、DALL-E 等">
-  
-  <title> PromptHero中文官网：AI绘画Prompt提示词、关键描述词、参数指令大全</title>
+
+    <meta name="description" content="GPT新手营地提供AI绘画Prompt提示词、关键描述词、参数指令大全中文素材网站，包括 Midjourney（MJ）、 Stable Diffusion、DALL-E 等">
+
+  <title> GPT新手营地-AI绘画Prompt提示词、关键描述词、参数指令大全</title>
   <!-- Facebook、Twitter分享 -->
   <meta property="og:type" content="website" />
   <meta property="twitter:type" content="website" />
+
   
-  
-  
+
     <link rel="apple-touch-icon" sizes="57x57" href="/images/webclip/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/images/webclip/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/images/webclip/apple-touch-icon-76x76.png">
@@ -24,13 +24,15 @@
     <link rel="apple-touch-icon" sizes="152x152" href="/images/webclip/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/webclip/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="167x167" href="/images/webclip/apple-touch-icon-167x167.png">
+
   
-  
+
     <link rel="shortcut icon" href="https://image.bysocket.com/2023/04/18/prompt-lg-artist.webp?dpr=0.5">
+
   
-  
+
     <link rel="stylesheet" href="/libs/socialshare/social-share.min.css"/>
- 
+
 <link rel="stylesheet" href="/css/style.css">
 
 
@@ -62,9 +64,9 @@ var _hmt = _hmt || [];
 
 <body>
   <main class="main">
-    
-	<header id="header" class="header header-absolute">
 
+	<header id="header" class="header header-absolute">
+	
 	<div class="container">
 		<nav class="navbar d-flex align-items-center">
 			<a class="brand" href="/">
@@ -80,28 +82,30 @@ var _hmt = _hmt || [];
     </svg>
   </div>
   <ul class="main-nav">
-    
-      
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/">
             首页
           </a>
         </li>
-        
-      
+
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/categories/midjourney-prompt/">
             Midjourney Prompt
           </a>
         </li>
-        
-      
+
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/about">
             关于
           </a>
         </li>
-        
+
   </ul>
 </div>
 
@@ -119,118 +123,12 @@ var _hmt = _hmt || [];
     </div>
   </div>
 </div>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css" />
 <!-- Algolia JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch.umd.js"
   integrity="sha256-4VKW0mBKZ+L5cl5Ln97mb+7rHephtIsGu06NioLZ1JQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js"></script>
-<script>
-  document.getElementById('close').addEventListener('click', function () {
-    document.querySelector('.search-container').style.display = 'none';
-  });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const algoliaClient = algoliasearch('KEHAN28C4G', 'b175dd119a8d07a48390bd30dd8e1e49');
-    const index = algoliaClient.initIndex('prompthero-index');
-    const searchClient = {
-      ...algoliaClient,
-      search(requests) {
-        if (requests.every(({ params }) => !params.query)) {
-          return Promise.resolve({
-            results: requests.map(() => ({
-              hits: [],
-              nbHits: 0,
-              nbPages: 0,
-              page: 0,
-              processingTimeMS: 0,
-              hitsPerPage: 0,
-              exhaustiveNbHits: false,
-              query: '',
-              params: '',
-            })),
-          });
-        }
-        return algoliaClient.search(requests);
-      },
-    }
-    const search = instantsearch({ indexName: 'prompthero-index', searchClient });
-
-    const { configure, hits, pagination, panel, refinementList, searchBox, } = instantsearch.widgets;
-    const loadingContainer = document.querySelector('#loading')
-    search.addWidgets([
-      searchBox({
-        container: '#searchbox',
-        placeholder: '请输入关键词搜索',
-        searchAsYouType: false,
-        showSubmit: true,
-        showLoadingIndicator: true,
-        templates: {
-          submit({ cssClasses }, { html }) {
-            return html`<span class="${cssClasses.submit}">点击去搜索</span>`;
-          },
-        },
-      }),
-      hits({
-        container: '#hits',
-        templates: {
-          item: (hit, { html, components }) => {
-            const imgsrc = hit.photos && hit.photos[0]
-            const title = hit.title
-            // console.log(hit, imgsrc)
-            return html`
-              <a target="_blank" href=${hit.permalink} ><img src="${imgsrc || ''}" alt="${title}" /></a>
-              <a target="_blank" href=${hit.permalink}>${components.Highlight({ hit, attribute: 'title' })}</a>
-            `
-          },
-          empty: (results, { html }) => {
-            return html`
-            <div id="empty">
-              <div style="color:#8f0d20;text-align: center;margin-top: 30px;">暂无搜索结果</div>
-            </div>
-            <div style="text-align: center;margin: 20px 0;">
-                <img src="https://image.bysocket.com/2023/05/24/mj-ald.webp" style="width: 30%;" />
-                <p style="color:#1f43d6;font-size: 1.3rem;padding-top: 8px">
-                    注册 MidJourney 难，这轻松解决
-                </p>
-                <p style="color:#1f43d6;font-size: 1.3rem;padding-top: 8px">
-                    微信扫一扫二维码，免费试用 MJ
-                </p>
-            </div>
-            `;
-
-          },
-        },
-      }),
-      configure({
-        hitsPerPage: 6,
-      }),
-      {
-        render({ searchMetadata = {} }) {
-          const { isSearchStalled } = searchMetadata
-          const emptyContainer = document.querySelector('#empty')
-          const hitsContainer = document.querySelector('#hits')
-          if(emptyContainer) emptyContainer.style.display = isSearchStalled ? 'none' : 'block'
-          if(hitsContainer) hitsContainer.style.display = isSearchStalled ? 'none' : 'block'
-          loadingContainer.style.display = isSearchStalled ? 'flex' : 'none'
-          loadingContainer.innerHTML = isSearchStalled ? 
-          `<div class="spinner-border text-primary" role="status">
-          <span class="sr-only"></span>
-        </div>` : ''
-        },
-      },
-      pagination({
-        container: '#pagination',
-        padding: 2,
-        showFirst: false,
-        showLast: false,
-      }),
-    ]);
-
-    search.start();
-
-  })
-</script>
 
 <script>
   document.querySelector('.search-input').addEventListener('click', function () {
@@ -311,7 +209,7 @@ var _hmt = _hmt || [];
       <!-- Index -->
 <div class="jumbotron mb-5">
   <div class="video">
-    
+
         <div class="video-media">
           <video playsinline loop muted data-autoplay autoplay poster="https://image.bysocket.com/2023/04/24/meri_snow_mountain.webp"
             x5-video-player-type="h5">
@@ -330,19 +228,19 @@ var _hmt = _hmt || [];
               <div class="hot-tags">
                 <span>热门标签：</span>
                 <span class="hot-tag">
-                  <a href="https://promptheroes.cn/categories/midjourney-prompt/">最新绘画</a>
+                  <a href="categories/midjourney-prompt/">最新绘画</a>
                 </span>
                 <span class="hot-tag">
-                  <a href="https://promptheroes.cn/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a>
+                  <a href="tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a>
                 </span>
                 <span class="hot-tag">
-                  <a href="https://promptheroes.cn/tags/%E5%85%94%E5%AD%90/">兔子</a>
+                  <a href="tags/%E5%85%94%E5%AD%90/">兔子</a>
                 </span>
                 <span class="hot-tag">
-                  <a href="https://promptheroes.cn/tags/%E5%A5%B3%E4%BA%BA/">美女</a>
+                  <a href="tags/%E5%A5%B3%E4%BA%BA/">美女</a>
                 </span>
                 <span class="hot-tag">
-                  <a href="https://promptheroes.cn/tags/%E6%B5%B7%E6%B4%8B/">海洋</a>
+                  <a href="tags/%E6%B5%B7%E6%B4%8B/">海洋</a>
                 </span>
               </div>
             </div>
@@ -373,17 +271,17 @@ var _hmt = _hmt || [];
         <p class="text-gray"></p>
       </div>
 
-      
+​      
         <div class="section-body">
           <!-- 
   Data Files: source/_data/album.yml
-  
+
 -->
 
 <div class="album-grid album-grid-6" id="album-grid">
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/midjourney-prompt-f-knolling-of-a-futuristic-nike-outfit-containing-jacket-pan-230421/" target="_blank">
+    <a href="/midjourney-prompt-f-knolling-of-a-futuristic-nike-outfit-containing-jacket-pan-230421/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/f-knolling-of-a-futuristic-nike-outfit-containing-jacket-pan-230421.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">未来派耐克服装的卷曲</h5>
@@ -393,9 +291,9 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/midjourney-prompt-g-luministic-Oil-and-Vibrant-230421/" target="_blank">
+    <a href="/midjourney-prompt-g-luministic-Oil-and-Vibrant-230421/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/g-luministic-Oil-and-Vibrant-230421.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">一艘沿着加勒比海中充满活力的大海滑行的木制欣克利斯鲁普帆船</h5>
@@ -405,9 +303,9 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/midjourney-prompt-o-amazing-epic-ancient-chinese-theme-230421/" target="_blank">
+    <a href="/midjourney-prompt-o-amazing-epic-ancient-chinese-theme-230421/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/o-amazing-epic-ancient-chinese-theme-230421.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">一个勇士站在一条巨大美丽的蔚蓝龙</h5>
@@ -417,9 +315,9 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/midjourney-prompt-t-photorealistic-8k-clear-glosy-glass-orb-containg-230419/" target="_blank">
+    <a href="/midjourney-prompt-t-photorealistic-8k-clear-glosy-glass-orb-containg-230419/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/t-photorealistic-8k-clear-glosy-glass-orb-containg-230419.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">照片逼真的8k透明光滑玻璃球</h5>
@@ -429,9 +327,9 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/spider-man-strolls-through-dark-city-rendered-cyberpu/" target="_blank">
+    <a href="/spider-man-strolls-through-dark-city-rendered-cyberpu/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/spider-man-strolls-through-dark-city-rendered-cyberpu.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">黑暗城市中赛博朋克风格的蜘蛛侠</h5>
@@ -441,9 +339,9 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
   <div class="album-grid-item">
-    <a href="https://promptheroes.cn/midjourney-prompt-s-logo-design-for-photographer-sunriseforestmountainrefreshi-230421/" target="_blank">
+    <a href="/midjourney-prompt-s-logo-design-for-photographer-sunriseforestmountainrefreshi-230421/" target="_blank">
         <div class="album-art" style="background-image: url(https://image.bysocket.com/promptheroes/s-logo-design-for-photographer-sunriseforestmountainrefreshi-230421.png?dpr=0.5)">
           <div class="album-art-text">
             <h5 class="mb-0">摄影师标志设计</h5>
@@ -453,13 +351,13 @@ var _hmt = _hmt || [];
         </div>
     </a>
   </div>
-  
+
 </div>
 
         </div>
       
       <div class="d-flex justify-content-center pt-5">
-        <a href="https://promptheroes.cn/categories/midjourney-prompt/" title="→ 查看更多" class="btn btn-lg more-btn more-btn-hover">→ 查看更多</a>
+        <a href="categories/midjourney-prompt/" title="→ 查看更多" class="btn btn-lg more-btn more-btn-hover">→ 查看更多</a>
       </div>
     </div>
   </section>
@@ -474,7 +372,7 @@ var _hmt = _hmt || [];
           <img class="filter-gray mb-3 lazyload" height="40" data-src="https://image.bysocket.com/2023/04/18/prompt-heroes-logo.webp?dpr=0.5" alt="PromptHero中文官网：AI绘画Prompt提示词、关键描述词、参数指令大全" role="img">
           <p class="mb-4">Prompt Heroes中文官网是提供AI绘画Prompt提示词、关键描述词、参数指令大全中文素材网站，包括 Midjourney（MJ）、 Stable Diffusion、DALL-E 等</p>
           <ul class="list-inline">
-            
+
           </ul>
         </div>
         <div class="col-4">
@@ -524,28 +422,30 @@ var _hmt = _hmt || [];
     </svg>
   </div>
   <ul class="mobile-nav">
-    
-      
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/">
             首页
           </a>
         </li>
-        
-      
+
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/categories/midjourney-prompt/">
             Midjourney Prompt
           </a>
         </li>
-        
-      
+
+
+​      
         <li class="nav-item ">
           <a class="nav-item-link" href="/about">
             关于
           </a>
         </li>
-        
+
   </ul>
 </div>
 
@@ -642,7 +542,7 @@ var _hmt = _hmt || [];
                 </p>
             </div>
             `;
-
+    
           },
         },
       }),
@@ -670,7 +570,7 @@ var _hmt = _hmt || [];
         showLast: false,
       }),
     ]);
-
+    
     search.start();
 
   })
@@ -756,16 +656,16 @@ var _hmt = _hmt || [];
 
 	<script src="/libs/tocbot/tocbot.min.js"></script>
 	<script>
-    tocbot.init({
-      // Where to render the table of contents.
-      tocSelector: '.js-toc',
-      // Where to grab the headings to build the table of contents.
-      contentSelector: '.js-toc-content',
-      // Which headings to grab inside of the contentSelector element.
-      headingSelector: 'h2, h3',
-      // For headings inside relative or absolute positioned containers within content.
-      hasInnerContainers: true,
-    });
+	tocbot.init({
+	  // Where to render the table of contents.
+	  tocSelector: '.js-toc',
+	  // Where to grab the headings to build the table of contents.
+	  contentSelector: '.js-toc-content',
+	  // Which headings to grab inside of the contentSelector element.
+	  headingSelector: 'h2, h3',
+	  // For headings inside relative or absolute positioned containers within content.
+	  hasInnerContainers: true,
+	});
 	</script>
 
 
@@ -782,7 +682,6 @@ var _hmt = _hmt || [];
 
 
 <script src="/js/script.js"></script>
-
 
 </body>
 </html>
